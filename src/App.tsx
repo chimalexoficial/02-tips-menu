@@ -1,33 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { menuItems } from "./data/db"
+import MenuItem from "./components/MenuItem";
+import OrderContents from "./components/OrderContent";
+import OrderTotals from "./components/OrderTotals";
+import useOrder from "./hooks/useOrder";
+import TipPercentageForm from "./components/TipPercentageForm";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const { order, addItem, removeItem, tip, setTip, placeOrder } = useOrder();
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header className=" bg-teal-400 py-5">
+        <h1 className="text-center text-4xl font-black">Menu & Tip Calculator</h1>
+      </header>
+
+      <main className=" max-w-7xl mx-auto py-20 grid md:grid-cols-2">
+        {/* COL 1 */}
+        <div className=" p-5">
+          <h2 className="text-4xl font-black">Menu</h2>
+          <div className="space-y-3 mt-10">
+            {menuItems.map(item => (
+              <MenuItem
+                key={item.id}
+                item={item}
+                addItem={addItem}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* COL 2 */}
+        <div className="border border-dashed border-slate-300 p-5 rounded-lg space-y-10">
+          <OrderContents
+            order={order}
+            removeItem={removeItem} />
+
+          <TipPercentageForm 
+            setTip={setTip} />
+
+          <OrderTotals
+            order={order}
+            tip={tip}
+            placeOrder={placeOrder} />
+        </div>
+      </main>
     </>
   )
 }
