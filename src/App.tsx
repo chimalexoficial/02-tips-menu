@@ -43,6 +43,7 @@ function App() {
             order={order}
             tip={tip}
             placeOrder={placeOrder} />
+            
         </div>
       </main>
     </>
