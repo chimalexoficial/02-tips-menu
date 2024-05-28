@@ -22,6 +22,10 @@ export default function OrderTotals({ order, tip }: OrderTotalsPropsType) {
 
     const totalToPay = useMemo(() => subtotalAmount + tipAmount, [tip, order]);
 
+    const reset = () => {
+        alert('Thank you for your payment!');
+    }
+
 
     return (
         <>
@@ -33,7 +37,10 @@ export default function OrderTotals({ order, tip }: OrderTotalsPropsType) {
 
                 <p>Total to Pay: <span className="font-bold">{formatCurrency(totalToPay)}</span></p>
 
-                <button className="center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" disabled={totalToPay === 0}>
+                <button 
+                className="center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" 
+                disabled={totalToPay === 0}
+                onClick={() => reset()}>
                     Pay now {formatCurrency(totalToPay)}
                 </button>
             </div>
